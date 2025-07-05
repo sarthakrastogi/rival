@@ -1,0 +1,9 @@
+*.ipynb
+.DS_Store
+.env
+examples
+__pycache__
+build
+dist
+rival_ai.egg-info
+advanced_criteria.py
