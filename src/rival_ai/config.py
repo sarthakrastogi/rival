@@ -1,11 +1,11 @@
-"""Configuration settings for the Rival SDK."""
+"""Configuration settings for the Rival AI."""
 
 import os
 from typing import Optional
 
 
 class Config:
-    """Configuration class for SDK settings."""
+    """Configuration class for AI settings."""
 
     def __init__(self):
         self.api_base_url = os.getenv("RIVAL_API_BASE_URL", "http://localhost:8000")

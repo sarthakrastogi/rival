@@ -1,15 +1,14 @@
 """Test case generation functionality."""
 
-import json
 from typing import List, Generator, Optional
 
 from ..core.agent_definition import AgentDefinition
 from ..core.testcase import AttackTestcase
 from ..exceptions import TestCaseGenerationError
-from .attack_criteria import (
+from .attack_criteria.models import (
     BaseAttackCriteria,
-    ATTACK_CRITERIA_REGISTRY,
 )
+from .attack_criteria.registry import AttackCriteriaRegistry
 from ..utils import llm_call, parse_json_from_llm_response
 
 
@@ -68,13 +67,10 @@ class TestCaseGenerator:
 
         # Default to all attack types if none specified
         if attack_types is None:
-            attack_types = list(ATTACK_CRITERIA_REGISTRY.keys())
+            attack_types = AttackCriteriaRegistry.get_all_attack_criteria()
 
-        for attack_type in attack_types:
+        for attack_name, attack_criteria_class in attack_types.items():
             try:
-                # Get the attack criteria class
-                attack_criteria_class = ATTACK_CRITERIA_REGISTRY[attack_type]
-
                 # Create instance with agent definition
                 attack_criteria = attack_criteria_class(
                     agent_definition=agent_definition
@@ -85,6 +81,7 @@ class TestCaseGenerator:
 
                 # Call LLM
                 llm_response = llm_call(messages=messages, model=self.model)
+                # print(f"LLM response for attack '{attack_name}': {llm_response}")
 
                 # Parse JSON response
                 testcases_data = parse_json_from_llm_response(llm_response)
@@ -100,7 +97,7 @@ class TestCaseGenerator:
 
             except Exception as e:
                 raise TestCaseGenerationError(
-                    f"Failed to generate test cases for attack type '{attack_type}': {str(e)}"
+                    f"Failed to generate test cases for attack type '{attack_name}': {str(e)}"
                 )
 
     def generate_with_criteria(

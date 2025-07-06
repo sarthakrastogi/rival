@@ -1,15 +1,15 @@
-"""Custom exceptions for the Rival SDK."""
+"""Custom exceptions for Rival AI."""
 
 from typing import Optional, Dict
 
 
-class RivalSDKError(Exception):
-    """Base exception for all Rival SDK errors."""
+class RivalAIError(Exception):
+    """Base exception for all Rival AI errors."""
 
     pass
 
 
-class APIError(RivalSDKError):
+class APIError(RivalAIError):
     """Exception raised for API-related errors."""
 
     def __init__(
@@ -23,19 +23,19 @@ class APIError(RivalSDKError):
         self.response_data = response_data
 
 
-class ValidationError(RivalSDKError):
+class ValidationError(RivalAIError):
     """Exception raised for validation errors."""
 
     pass
 
 
-class ConfigurationError(RivalSDKError):
+class ConfigurationError(RivalAIError):
     """Exception raised for configuration errors."""
 
     pass
 
 
-class TestCaseGenerationError(RivalSDKError):
+class TestCaseGenerationError(RivalAIError):
     """Exception raised for test case generation errors."""
 
     pass

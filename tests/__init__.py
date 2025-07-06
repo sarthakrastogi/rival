@@ -1,1 +1,1 @@
-"""Test suite for Rival SDK."""
+"""Test suite for Rival AI."""

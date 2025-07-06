@@ -4,7 +4,7 @@ import pytest
 from unittest.mock import Mock
 
 from rival_ai.generators.testcase_generator import TestCaseGenerator
-from rival_ai.generators.attack_criteria import PromptInjectionAttack
+from rival_ai.generators.attack_criteria.models import PromptInjectionAttack
 from rival_ai.exceptions import TestCaseGenerationError
 
 

@@ -1,4 +1,4 @@
-"""Core components of the Rival SDK."""
+"""Core components of Rival AI."""
 
 from .agent_definition import AgentDefinition
 from .benchmarking import Benchmarking

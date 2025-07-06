@@ -28,7 +28,7 @@ $ pip install rival-ai
 ### 0. Make imports
 
 ```python
-from src.rival_ai import (
+from rival_ai import (
     AgentDefinition,
     TestCaseGenerator,
     Benchmarking,
@@ -74,6 +74,7 @@ for i, testcase in enumerate(
     # Run your agent with the test case inputs
     agent_response = process_customer_message(inputs=testcase.inputs)
 
+    # Evaluate the agent's response against the test case
     eval_result = testcase.evaluate(
         project_id=project_id,
         agent_definition=agent_definition,
@@ -150,6 +151,11 @@ os.environ["RIVAL_DEFAULT_MODEL"] = "gpt-4.1-nano"
 from rival_ai.config import config
 config.default_model = "gpt-4.1-nano"
 ```
+
+## Supported Attacks:
+- Harmful Content Generation
+- Privacy & Data Security
+- Prompt Manipulation & Instruction Adherence
 
 ## Roadmap
 

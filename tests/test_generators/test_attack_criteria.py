@@ -2,7 +2,7 @@
 
 import pytest
 
-from rival_ai.generators.attack_criteria import (
+from rival_ai.generators.attack_criteria.models import (
     SubAttack,
     PromptInjectionAttack,
     get_attack_criteria,
@@ -18,7 +18,7 @@ class TestSubAttack:
             id="test_attack",
             name="Test Attack",
             description="A test attack",
-            example_input="test input",
+            instructions="test input",
         )
 
         assert sub_attack.id == "test_attack"
@@ -30,7 +30,7 @@ class TestSubAttack:
             id="test_attack",
             name="Test Attack",
             description="A test attack",
-            example_input="test input",
+            instructions="test input",
         )
 
         formatted = sub_attack.format_to_string()
