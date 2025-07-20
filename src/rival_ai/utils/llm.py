@@ -17,11 +17,7 @@ from ..config import config
 from ..exceptions import APIError
 
 
-# Default model - this should be defined in your config
-DEFAULT_LLM = getattr(config, "default_llm_model", "gpt-3.5-turbo")
-
-
-def llm_call(messages: List[Dict[str, str]], model: str = DEFAULT_LLM) -> str:
+def llm_call(messages: List[Dict[str, str]], model: str = config.default_model) -> str:
     """
     Calls a language model to generate a response.
 
@@ -49,7 +45,7 @@ def llm_call(messages: List[Dict[str, str]], model: str = DEFAULT_LLM) -> str:
 
 def batch_llm_call(
     message_batches: List[List[Dict[str, str]]],
-    model: str = DEFAULT_LLM,
+    model: str = config.default_model,
     max_retries: int = 3,
 ) -> List[str]:
     """

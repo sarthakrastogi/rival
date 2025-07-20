@@ -21,6 +21,10 @@ class AttackCriteriaRegistry:
     """Registry for managing attack criteria types."""
 
     _registry: Dict[str, Type[BaseAttackCriteria]] = {
+        "prompt_injection": PromptInjectionAttack,
+        "system_prompt_extraction": SystemPromptExtraction,
+        "instruction_hierarchy_confusion": InstructionHierarchyConfusion,
+        "delimiter_and_format_exploitation": DelimiterAndFormatExploitation,
         "harmful_content_requests": HarmfulContentRequests,
         "bias_amplification": BiasAmplification,
         "misinformation_generation": MisinformationGeneration,
@@ -28,10 +32,6 @@ class AttackCriteriaRegistry:
         "personal_information_extraction": PersonalInformationExtraction,
         "data_leakage_scenarios": DataLeakageScenarios,
         "privacy_boundary_testing": PrivacyBoundaryTesting,
-        "prompt_injection": PromptInjectionAttack,
-        "system_prompt_extraction": SystemPromptExtraction,
-        "instruction_hierarchy_confusion": InstructionHierarchyConfusion,
-        "delimiter_and_format_exploitation": DelimiterAndFormatExploitation,
     }
 
     @classmethod

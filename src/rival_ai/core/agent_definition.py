@@ -31,16 +31,17 @@ class AgentDefinition(BaseModel):
         except Exception as e:
             agent_representation = f"Error generating representation: {str(e)}"
 
-        return f"""{self.name}
+        return f"""# Agent Description
+{self.name}
 {self.description}
 
-# Agent Representation
+## Agent Representation
 {agent_representation}
 
-# Input Schema:
+## Input Schema:
 {self.input_schema}
 
-# Output Schema:
+## Output Schema:
 {self.output_schema}"""
 
     def save_to_project(

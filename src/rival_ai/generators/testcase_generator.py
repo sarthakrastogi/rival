@@ -1,5 +1,6 @@
 """Test case generation functionality."""
 
+import itertools
 from typing import List, Generator, Optional
 
 from ..core.agent_definition import AgentDefinition
@@ -49,6 +50,7 @@ class TestCaseGenerator:
         self,
         agent_definition: AgentDefinition,
         attack_types: Optional[List[str]] = None,
+        n_testcases_limit: int = None,
     ) -> Generator[AttackTestcase, None, None]:
         """
         Generate test cases locally using provided LLM function.
@@ -56,7 +58,7 @@ class TestCaseGenerator:
         Args:
             agent_definition: The agent to generate test cases for
             attack_types: List of attack types to generate (defaults to all)
-            llm_callable: Function to call LLM (must accept messages and model params)
+            n_testcases_limit: Maximum number of attacks to generate (optional)
 
         Yields:
             AttackTestcase: Generated test cases
@@ -65,40 +67,40 @@ class TestCaseGenerator:
             TestCaseGenerationError: If generation fails
         """
 
-        # Default to all attack types if none specified
         if attack_types is None:
             attack_types = AttackCriteriaRegistry.get_all_attack_criteria()
 
-        for attack_name, attack_criteria_class in attack_types.items():
-            try:
-                # Create instance with agent definition
-                attack_criteria = attack_criteria_class(
-                    agent_definition=agent_definition
-                )
+        def testcase_generator():
+            for attack_name, attack_criteria_class in attack_types.items():
+                try:
+                    attack_criteria = attack_criteria_class(
+                        agent_definition=agent_definition
+                    )
+                    messages = attack_criteria.get_generation_messages()
+                    llm_response = llm_call(messages=messages, model=self.model)
+                    testcases_data = parse_json_from_llm_response(llm_response)
 
-                # Generate messages for LLM
-                messages = attack_criteria.get_generation_messages()
+                    for testcase_data in testcases_data:
+                        testcase = AttackTestcase.from_dict(testcase_data)
+                        yield testcase
 
-                # Call LLM
-                llm_response = llm_call(messages=messages, model=self.model)
-                # print(f"LLM response for attack '{attack_name}': {llm_response}")
+                except Exception as e:
+                    raise TestCaseGenerationError(
+                        f"Failed to generate test cases for attack type '{attack_name}': {str(e)}"
+                    )
 
-                # Parse JSON response
-                testcases_data = parse_json_from_llm_response(llm_response)
+        limited_generator = (
+            testcase_generator()
+            if n_testcases_limit is None
+            else itertools.islice(testcase_generator(), n_testcases_limit)
+        )
 
-                # Convert to AttackTestcase objects
-                for i, testcase_data in enumerate(testcases_data):
-                    testcase = AttackTestcase.from_dict(testcase_data)
-                    print(f"\n--- Test Case {i+1} ---")
-                    print(f"ID: {testcase.id}")
-                    print(f"Inputs: {testcase.inputs}")
-                    print(f"Pass Criteria: {testcase.pass_criteria}")
-                    yield testcase
-
-            except Exception as e:
-                raise TestCaseGenerationError(
-                    f"Failed to generate test cases for attack type '{attack_name}': {str(e)}"
-                )
+        for i, testcase in enumerate(limited_generator, start=1):
+            print(f"\n--- Test Case {i} ---")
+            print(f"ID: {testcase.id}")
+            print(f"Inputs: {testcase.inputs}")
+            print(f"Pass Criteria: {testcase.pass_criteria}")
+            yield testcase
 
     def generate_with_criteria(
         self,
