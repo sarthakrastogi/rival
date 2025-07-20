@@ -1,7 +1,6 @@
 *.ipynb
 .DS_Store
 .env
-examples
 __pycache__
 build
 dist
@@ -10,3 +9,4 @@ advanced_criteria.py
 temp_model
 trained_ai_attack_detector
 *.csv
+content.md
