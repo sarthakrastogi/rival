@@ -1,9 +1,10 @@
+# config.py
 import torch
 
 
 class Config:
     # Model configuration
-    BASE_MODEL = "all-mpnet-base-v2"  # Powerful sentence transformer model
+    BASE_MODEL = "answerdotai/ModernBERT-large"  # "all-mpnet-base-v2"  # Powerful sentence transformer model
     MAX_SEQ_LENGTH = 512
     BATCH_SIZE = 16
     NUM_EPOCHS = 5
@@ -17,9 +18,15 @@ class Config:
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
     # HuggingFace configuration
-    HF_MODEL_NAME = "rival_ai_attack_detector"
+    HF_BINARY_CLASSIFIER_MODEL_NAME = "rival_ai_attack_detector_binary"
+    HF_MULTICLASS_CLASSIFIER_MODEL_NAME = "rival_ai_attack_detector_multiclass"
     HF_ORGANIZATION = "sarthakrastogi"
-    HF_REPO_ID = f"{HF_ORGANIZATION}/{HF_MODEL_NAME}"
+    HF_BINARY_CLASSIFIER_REPO_ID = (
+        f"{HF_ORGANIZATION}/{HF_BINARY_CLASSIFIER_MODEL_NAME}"
+    )
+    HF_MULTICLASS_CLASSIFIER_REPO_ID = (
+        f"{HF_ORGANIZATION}/{HF_MULTICLASS_CLASSIFIER_MODEL_NAME}"
+    )
 
     # Classification thresholds
     CLASSIFICATION_THRESHOLD = 0.5

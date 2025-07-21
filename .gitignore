@@ -1,4 +1,4 @@
-*.ipynb
+
 .DS_Store
 .env
 __pycache__
@@ -7,6 +7,11 @@ dist
 rival_ai.egg-info
 advanced_criteria.py
 temp_model
-trained_ai_attack_detector
+trained_ai_attack_detector*
 *.csv
+*.json
+*.ipynb
 content.md
+cleanup.ipynb
+rival_test.ipynb
+docs

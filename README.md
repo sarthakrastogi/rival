@@ -25,8 +25,6 @@ You can **star ⭐️ this repo** to stay updated on the latest safety and evalu
 
 ## Quick Start
 
-### 0. Make imports
-
 ```python
 from rival_ai import (
     AgentDefinition,
@@ -36,7 +34,6 @@ from rival_ai import (
     AIAttackDetector,
 )
 ```
-
 
 ### Part 1. Protect Your Agent in Production
 
@@ -84,7 +81,7 @@ Simply add your LangGraph workflow -- support for other agent frameworks (AutoGe
 agent_definition = AgentDefinition(
     name="CustomerSupportAgent",
     description="An agent that provides customer support by answering questions and resolving issues.",
-    agent_object=customer_support_graph,
+    agent_object=customer_support_graph, # Add your Langgraph workflow graph here
     agent_type="langgraph",
     input_schema={"customer_input": "string"},
     output_schema={"reply": "string"},
@@ -94,7 +91,7 @@ agent_definition = AgentDefinition(
 #### 2. Generate Test Cases Locally
 
 ```python
-generator = TestCaseGenerator(model="gpt-4.1-nano")
+generator = TestCaseGenerator(model="gpt-4.1-mini")
 ```
 
 #### 3. Benchmark your agent on generated testcases
