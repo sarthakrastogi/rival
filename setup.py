@@ -5,7 +5,7 @@ with open("README.MD", "r") as f:
 
 setup(
     name="rival-ai",
-    version="0.1.5",
+    version="0.1.6",
     description="A library for testing and protecting AI agent safety",
     long_description=readme_content,
     long_description_content_type="text/markdown",
