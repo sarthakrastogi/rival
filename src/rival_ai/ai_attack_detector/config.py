@@ -29,7 +29,7 @@ class Config:
     )
 
     # Classification thresholds
-    CLASSIFICATION_THRESHOLD = 0.5
+    CLASSIFICATION_THRESHOLD = 0.513
 
     # Data configuration
     TEXT_COLUMN = "text"

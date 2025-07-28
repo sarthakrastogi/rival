@@ -29,15 +29,6 @@ from ..utils.preprocessing import TextPreprocessor
 token = os.getenv("HUGGINGFACE_HUB_TOKEN")
 print(f"Token found: {token is not None}")
 
-if token:
-    # Test the token
-    try:
-        api = HfApi(token=token)
-        user = api.whoami()
-        print(f"Authenticated as: {user['name']}")
-    except Exception as e:
-        print(f"Token authentication failed: {e}")
-
 
 class ContrastiveLoss(nn.Module):
     """
