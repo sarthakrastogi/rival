@@ -3,6 +3,9 @@ from setuptools import setup, find_packages
 with open("README.MD", "r") as f:
     readme_content = f.read()
 
+with open('requirements.txt') as f:
+    install_requires = f.read().splitlines()
+
 setup(
     name="rival-ai",
     version="0.1.6",
@@ -12,19 +15,7 @@ setup(
     author="Sarthak Rastogi",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
-    install_requires=[
-        "pydantic>=2.0.0",
-        "litellm>=1.66.1",
-        "torch>=2.0.0",
-        "transformers>=4.30.0",
-        "sentence-transformers>=2.2.0",
-        "scikit-learn>=1.3.0",
-        "pandas>=2.0.0",
-        "numpy>=1.24.0",
-        "huggingface_hub>=0.16.0",
-        "datasets>=2.14.0",
-        "accelerate>=0.20.0",
-    ],
+    install_requires=install_requires,
     extras_require={
         "dev": [
             "pytest>=7.0.0",

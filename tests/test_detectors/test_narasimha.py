@@ -1,4 +1,4 @@
-from rival_ai.narasimha import NarasimhaAttackDetector
+from rival_ai.detectors.narasimha import NarasimhaAttackDetector
 
 
 # Comprehensive test suite

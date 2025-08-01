@@ -15,19 +15,16 @@ from sklearn.metrics import (
 )
 import numpy as np
 from tqdm import tqdm
-from huggingface_hub import HfApi, create_repo
 import os
 import json
 import torch.nn.functional as F
-from transformers import AutoTokenizer, AutoModel
 
+from ....config import Config
 from .classifier import AttackClassifier
-from ..config import Config
 from ..utils.preprocessing import TextPreprocessor
 
-# Check if token is in environment
+# Check if HF token is in environment
 token = os.getenv("HUGGINGFACE_HUB_TOKEN")
-print(f"Token found: {token is not None}")
 
 
 class ContrastiveLoss(nn.Module):
@@ -72,7 +69,7 @@ class ContrastiveLoss(nn.Module):
         return pos_loss + neg_loss
 
 
-class AttackDetectorTrainer:
+class BhairavaAttackDetectorTrainer:
     def __init__(
         self,
         config=None,
@@ -730,10 +727,10 @@ This model is fine-tuned to detect AI attack queries vs benign queries using {cl
 ## Usage
 
 ```python
-from rival_ai import AIAttackDetector
+from rival_ai import BhairavaAttackDetector
 
 # Load the pre-trained attack detector
-detector = AIAttackDetector.from_pretrained()
+detector = BhairavaAttackDetector.from_pretrained()
 
 # Test some queries
 queries = [
@@ -744,7 +741,7 @@ queries = [
 ]
 
 for query in queries:
-    result = detector.predict(query)
+    result = detector.detect_attack(query)
     print(query)
     {"print(result['predicted_class'], result['confidence'])" if self.multiclass else "print(result['is_attack'], result['confidence'])"}
 ```

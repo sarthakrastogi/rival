@@ -1,17 +1,29 @@
-
+# IDE and OS specific
 .DS_Store
+.idea/
+.vscode/
+
+# Python cache and virtual environments
+__pycache__/
+*.pyc
 .env
-__pycache__
-build
-dist
+venv/
+env/
+
+# Build artifacts
+build/
+dist/
+*.egg-info
 rival_ai.egg-info
-advanced_criteria.py
-temp_model
+
+# Generated files and data
 trained_ai_attack_detector*
 *.csv
 *.json
 *.ipynb
-content.md
-cleanup.ipynb
-rival_test.ipynb
 docs
+output/
+
+# Temporary files
+temp_model
+advanced_criteria.py

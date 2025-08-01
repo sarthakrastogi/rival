@@ -1,9 +1,9 @@
 # Training and Deployment Pipeline for AI Attack Detector
 # Updated to support both binary and multi-class classification
 
-from ..ai_attack_detector import AIAttackDetector, AttackDetectorTrainer
-from ..ai_attack_detector.data.dataset import DataLoader
-from ..ai_attack_detector.config import Config
+from ..bhairava import BhairavaAttackDetector, AttackDetectorTrainer
+from ..bhairava.data.dataset import DataLoader
+from ...config import Config
 import os
 
 config = Config()
@@ -113,7 +113,7 @@ def train_and_deploy_model(
 
         # 8. Test loading from Hub
         print("\n🧪 Testing model loading from Hub...")
-        detector = AIAttackDetector.from_pretrained(multiclass=multiclass)
+        detector = BhairavaAttackDetector.from_pretrained(multiclass=multiclass)
 
         # Test predictions
         test_queries = [
@@ -131,7 +131,7 @@ def train_and_deploy_model(
             print()
 
         for query in test_queries:
-            result = detector.predict(query)
+            result = detector.detect_attack(query)
 
             if multiclass:
                 class_name = result.get(
@@ -192,12 +192,12 @@ def test_deployed_model(model_path_or_repo, multiclass=False):
 
     # Load the model
     if os.path.exists(model_path_or_repo):
-        detector = AIAttackDetector(
+        detector = BhairavaAttackDetector(
             model_path=model_path_or_repo, multiclass=multiclass
         )
         print(f"📂 Loaded model from local path: {model_path_or_repo}")
     else:
-        detector = AIAttackDetector.from_pretrained(
+        detector = BhairavaAttackDetector.from_pretrained(
             model_path_or_repo, multiclass=multiclass
         )
         print(f"🌐 Loaded model from HuggingFace: {model_path_or_repo}")
@@ -227,7 +227,7 @@ def test_deployed_model(model_path_or_repo, multiclass=False):
         print()
 
         for query, expected in test_cases:
-            result = detector.predict(query)
+            result = detector.detect_attack(query)
             class_name = result.get("class_name", f"Class {result['predicted_class']}")
 
             print(f"Query: {query}")
@@ -248,7 +248,7 @@ def test_deployed_model(model_path_or_repo, multiclass=False):
 
         correct_predictions = 0
         for query, expected_attack in test_cases:
-            result = detector.predict(query)
+            result = detector.detect_attack(query)
             is_correct = result["is_attack"] == expected_attack
             if is_correct:
                 correct_predictions += 1

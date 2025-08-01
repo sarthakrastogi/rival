@@ -1,8 +1,8 @@
 # Inference Example for AI Attack Detector
 # Updated to support both binary and multi-class classification
 
-from ..ai_attack_detector import AIAttackDetector
-from .config import Config
+from ...src.rival_ai.detectors.bhairava import BhairavaAttackDetector
+from ...src.rival_ai.config import Config
 
 config = Config()
 
@@ -17,7 +17,7 @@ def demonstrate_binary_inference():
     print("\n📥 Loading binary model from HuggingFace Hub...")
     try:
         # Replace with your actual binary model repo
-        detector = AIAttackDetector.from_pretrained(multiclass=False)
+        detector = BhairavaAttackDetector.from_pretrained(multiclass=False)
         print("✅ Binary model loaded successfully from Hub!")
     except Exception as e:
         print(f"❌ Failed to load from Hub: {e}")
@@ -25,7 +25,7 @@ def demonstrate_binary_inference():
 
         # Method 2: Load from local directory
         try:
-            detector = AIAttackDetector(
+            detector = BhairavaAttackDetector(
                 model_path="trained_ai_attack_detector_binary", multiclass=False
             )
             print("✅ Binary model loaded successfully from local directory!")
@@ -60,7 +60,7 @@ def demonstrate_binary_inference():
     correct_predictions = 0
 
     for i, (query, expected_attack) in enumerate(test_cases, 1):
-        result = detector.predict(query)
+        result = detector.detect_attack(query)
 
         is_correct = result["is_attack"] == expected_attack
         if is_correct:
@@ -90,7 +90,7 @@ def demonstrate_multiclass_inference():
     print("\n📥 Loading multi-class model from HuggingFace Hub...")
     try:
         # Replace with your actual multi-class model repo
-        detector = AIAttackDetector.from_pretrained(multiclass=True)
+        detector = BhairavaAttackDetector.from_pretrained(multiclass=True)
         print("✅ Multi-class model loaded successfully from Hub!")
     except Exception as e:
         print(f"❌ Failed to load from Hub: {e}")
@@ -98,7 +98,7 @@ def demonstrate_multiclass_inference():
 
         # Method 2: Load from local directory
         try:
-            detector = AIAttackDetector(
+            detector = BhairavaAttackDetector(
                 model_path="trained_ai_attack_detector_multiclass", multiclass=True
             )
             print("✅ Multi-class model loaded successfully from local directory!")
@@ -154,7 +154,7 @@ def demonstrate_multiclass_inference():
     correct_predictions = 0
 
     for i, (query, expected_class) in enumerate(test_cases, 1):
-        result = detector.predict(query)
+        result = detector.detect_attack(query)
 
         predicted_class = result.get("class_name", f"Class {result['predicted_class']}")
         is_correct = predicted_class == expected_class
@@ -186,9 +186,9 @@ def batch_inference_example(multiclass=False):
 
     # Load appropriate model
     try:
-        detector = AIAttackDetector.from_pretrained(multiclass=multiclass)
+        detector = BhairavaAttackDetector.from_pretrained(multiclass=multiclass)
     except:
-        detector = AIAttackDetector(multiclass=multiclass)
+        detector = BhairavaAttackDetector(multiclass=multiclass)
 
     # Batch of queries
     queries = [
@@ -225,9 +225,9 @@ def threshold_tuning_example(multiclass=False):
 
     # Load appropriate model
     try:
-        detector = AIAttackDetector.from_pretrained(multiclass=multiclass)
+        detector = BhairavaAttackDetector.from_pretrained(multiclass=multiclass)
     except:
-        detector = AIAttackDetector(multiclass=multiclass)
+        detector = BhairavaAttackDetector(multiclass=multiclass)
 
     # Borderline cases for testing
     test_queries = [
@@ -246,7 +246,7 @@ def threshold_tuning_example(multiclass=False):
 
         for threshold in thresholds:
             detector.set_threshold(threshold)
-            result = detector.predict(query)
+            result = detector.detect_attack(query)
 
             if multiclass:
                 class_name = result.get(
@@ -268,8 +268,8 @@ def compare_binary_vs_multiclass():
 
     try:
         # Load both models
-        binary_detector = AIAttackDetector.from_pretrained(multiclass=False)
-        multiclass_detector = AIAttackDetector.from_pretrained(multiclass=True)
+        binary_detector = BhairavaAttackDetector.from_pretrained(multiclass=False)
+        multiclass_detector = BhairavaAttackDetector.from_pretrained(multiclass=True)
     except:
         print("❌ Could not load models for comparison")
         return
@@ -291,8 +291,8 @@ def compare_binary_vs_multiclass():
     print("-" * 100)
 
     for query in test_queries:
-        binary_result = binary_detector.predict(query)
-        multiclass_result = multiclass_detector.predict(query)
+        binary_result = binary_detector.detect_attack(query)
+        multiclass_result = multiclass_detector.detect_attack(query)
 
         binary_pred = "ATTACK" if binary_result["is_attack"] else "BENIGN"
         multiclass_pred = multiclass_result.get(
@@ -346,9 +346,9 @@ def quick_test(model_path_or_repo, multiclass=False):
 
     # Load model
     if "huggingface.co" in model_path_or_repo or "/" in model_path_or_repo:
-        detector = AIAttackDetector.from_pretrained(multiclass=multiclass)
+        detector = BhairavaAttackDetector.from_pretrained(multiclass=multiclass)
     else:
-        detector = AIAttackDetector(multiclass=multiclass)
+        detector = BhairavaAttackDetector(multiclass=multiclass)
 
     # Quick test queries
     quick_queries = [
@@ -362,7 +362,7 @@ def quick_test(model_path_or_repo, multiclass=False):
         print(f"Classes: {detector.get_class_names()}")
 
     for query in quick_queries:
-        result = detector.predict(query)
+        result = detector.detect_attack(query)
 
         if multiclass:
             class_name = result.get("class_name", f"Class {result['predicted_class']}")

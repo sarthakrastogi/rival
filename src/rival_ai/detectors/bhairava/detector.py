@@ -5,17 +5,15 @@ import torch.nn as nn
 import os
 import json
 from huggingface_hub import hf_hub_download
-from sentence_transformers import SentenceTransformer
-from transformers import AutoTokenizer, AutoModel
 import tempfile
 import shutil
 import numpy as np
 from .models.classifier import AttackClassifier
-from .config import Config
+from ...config import Config
 from .utils.preprocessing import TextPreprocessor
 
 
-class AIAttackDetector:
+class BhairavaAttackDetector:
     def __init__(self, model_path=None, config=None, multiclass=False):
         self.config = config or Config()
         self.device = torch.device(self.config.DEVICE)
@@ -129,10 +127,10 @@ class AIAttackDetector:
         self.model.eval()
 
         # Update threshold if specified in config (for binary classification)
-        if not self.multiclass and "classification_threshold" in model_config:
-            self.config.CLASSIFICATION_THRESHOLD = model_config[
-                "classification_threshold"
-            ]
+        # if not self.multiclass and "classification_threshold" in model_config:
+        #    self.config.CLASSIFICATION_THRESHOLD = model_config[
+        #        "classification_threshold"
+        #    ]
 
         print(f"✅ Model loaded successfully")
         print(f"   - Base model: {base_model_name}")
@@ -226,10 +224,10 @@ class AIAttackDetector:
                     f"Requested multiclass={multiclass} but model is configured for multiclass={model_multiclass}"
                 )
 
-            if not model_multiclass:
-                config.CLASSIFICATION_THRESHOLD = model_config[
-                    "classification_threshold"
-                ]
+            # if not model_multiclass:
+            #    config.CLASSIFICATION_THRESHOLD = model_config[
+            #        "classification_threshold"
+            #    ]
 
             # Create detector instance
             detector = cls(config=config, multiclass=model_multiclass)
@@ -288,7 +286,7 @@ class AIAttackDetector:
             if os.path.exists(temp_dir):
                 shutil.rmtree(temp_dir)
 
-    def predict(self, text):
+    def detect_attack(self, text):
         """Predict if a text is an attack (binary) or predict class (multiclass)."""
         if self.model is None:
             raise ValueError(

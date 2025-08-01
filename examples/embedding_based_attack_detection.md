@@ -2,10 +2,10 @@
 You can also use the embedding-based attack detector for threat analysis. Although using Narasimha is more accurate and explanable.
 
 ```python
-from rival_ai import AIAttackDetector
+from rival_ai import BhairavaAttackDetector
 
 # Load the pre-trained attack detector
-detector = AIAttackDetector.from_pretrained()
+detector = BhairavaAttackDetector.from_pretrained()
 
 # Test some queries
 queries = [
@@ -14,7 +14,7 @@ queries = [
 ]
 
 for query in queries:
-    result = detector.predict(query)
+    result = detector.detect_attack(query)
     print(f"Query: {query}\nAttack: {result['is_attack']} | Confidence: {result['confidence']:.4f}")
 ```
 
