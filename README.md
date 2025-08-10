@@ -1,6 +1,9 @@
 <h1 align="center">
     🦁 Rival AI
 </h1>
+<h3 align="center">
+    Guardrails for AI projects
+</h3>
 <p align="center">
     <p align="center">
     <a target="_blank" href="https://colab.research.google.com/drive/1M0Qcvd6YZIjTnd1d5Kyr3JAXtpy7JOQQ">
@@ -24,10 +27,6 @@ Rival AI provides comprehensive AI safety tools for production environments:
 
 - **Real-time Attack Detection** using custom lightweight models for production deployment
 - **Automated Red Teaming and Benchmarking** - generate diverse attack scenarios to evaluate your agent's security
-
-[**Jump to Quick Start**](#quick-start) <br>
-[**Jump to Red Teaming Guide**](#red-teaming-for-your-ai-agents) <br>
-[**Jump to Details**](#privacy-and-security)
 
 ## Installation
 
@@ -96,9 +95,9 @@ print(f"Attack: {result['is_attack']} | Thinking: {result['thinking']}")
 
 ### Response
 ```
-# True
+True
 
-# Attack: True | Thinking: This request seeks to exploit the system's safety protocols under the guise of research, potentially leading to harmful outputs.
+Attack: True | Thinking: This request seeks to exploit the system's safety protocols under the guise of research, potentially leading to harmful outputs.
 ```
 
 ## Supported Attacks
@@ -134,12 +133,6 @@ We welcome contributions to Rival AI! Whether you're fixing bugs, adding feature
 ## Support
 - [DM the creator on LinkedIn 💭](https://www.linkedin.com/in/sarthakrastogi/)
 - [GitHub Issues 🐛](https://github.com/sarthakrastogi/rival/issues)
-
----
-
-*Pictured:* A lion play-fighting with its cubs to teach them how to defend themselves :) Image generated with ChatGPT.
-
-![Lion play-fighting cubs](media/lion_play_fighting_cubs.png)
 
 ---
 
