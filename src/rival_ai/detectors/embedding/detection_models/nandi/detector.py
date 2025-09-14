@@ -8,12 +8,12 @@ from huggingface_hub import hf_hub_download
 import tempfile
 import shutil
 import numpy as np
-from .models.classifier import AttackClassifier
-from ...config import Config
-from .utils.preprocessing import TextPreprocessor
+from ...models.classifier import AttackClassifier
+from .....config import Config
+from ...utils.preprocessing import TextPreprocessor
 
 
-class BhairavaAttackDetector:
+class NandiAttackDetector:
     def __init__(self, model_path=None, config=None, multiclass=False):
         self.config = config or Config()
         self.device = torch.device(self.config.DEVICE)
@@ -181,9 +181,9 @@ class BhairavaAttackDetector:
 
         # Determine repo_id based on multiclass parameter
         repo_id = (
-            config.HF_MULTICLASS_CLASSIFIER_REPO_ID
+            config.HF_NANDI_MULTICLASS_CLASSIFIER_REPO_ID
             if multiclass
-            else config.HF_BINARY_CLASSIFIER_REPO_ID
+            else config.HF_NANDI_BINARY_CLASSIFIER_REPO_ID
         )
 
         # Create temporary directory for downloads

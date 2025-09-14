@@ -28,14 +28,30 @@ class Config:
         self.DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
         # HuggingFace configuration
-        self.HF_BINARY_CLASSIFIER_MODEL_NAME = "rival_ai_attack_detector_binary"
-        self.HF_MULTICLASS_CLASSIFIER_MODEL_NAME = "rival_ai_attack_detector_multiclass"
         self.HF_ORGANIZATION = "sarthakrastogi"
-        self.HF_BINARY_CLASSIFIER_REPO_ID = (
-            f"{self.HF_ORGANIZATION}/{self.HF_BINARY_CLASSIFIER_MODEL_NAME}"
+
+        # ---
+        self.HF_BHAIRAVA_BINARY_CLASSIFIER_MODEL_NAME = (
+            "rival_ai_attack_detector_binary"
         )
-        self.HF_MULTICLASS_CLASSIFIER_REPO_ID = (
-            f"{self.HF_ORGANIZATION}/{self.HF_MULTICLASS_CLASSIFIER_MODEL_NAME}"
+        self.HF_BHAIRAVA_MULTICLASS_CLASSIFIER_MODEL_NAME = (
+            "rival_ai_attack_detector_multiclass"
+        )
+        self.HF_BHAIRAVA_BINARY_CLASSIFIER_REPO_ID = (
+            f"{self.HF_ORGANIZATION}/{self.HF_BHAIRAVA_BINARY_CLASSIFIER_MODEL_NAME}"
+        )
+        self.HF_BHAIRAVA_MULTICLASS_CLASSIFIER_REPO_ID = f"{self.HF_ORGANIZATION}/{self.HF_BHAIRAVA_MULTICLASS_CLASSIFIER_MODEL_NAME}"
+
+        # ---
+        self.HF_NANDI_BINARY_CLASSIFIER_MODEL_NAME = "nandi_attack_detector_binary"
+        self.HF_NANDI_MULTICLASS_CLASSIFIER_MODEL_NAME = (
+            "nandi_attack_detector_multiclass"
+        )
+        self.HF_NANDI_BINARY_CLASSIFIER_REPO_ID = (
+            f"{self.HF_ORGANIZATION}/{self.HF_NANDI_BINARY_CLASSIFIER_MODEL_NAME}"
+        )
+        self.HF_NANDI_MULTICLASS_CLASSIFIER_REPO_ID = (
+            f"{self.HF_ORGANIZATION}/{self.HF_NANDI_MULTICLASS_CLASSIFIER_MODEL_NAME}"
         )
 
         # Classification thresholds

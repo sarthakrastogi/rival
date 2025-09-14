@@ -27,3 +27,5 @@ output/
 # Temporary files
 temp_model
 advanced_criteria.py
+train_and_deploy.py
+trainer.py
